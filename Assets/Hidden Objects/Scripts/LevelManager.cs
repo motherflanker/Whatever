@@ -51,6 +51,21 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D tap = Physics2D.Raycast(pos, Vector3.zero);
+
+            if(tap && tap.collider != null)
+            {
+                Debug.Log("Object Name:" + tap.collider.gameObject.name);
+            }
+        }
+    }
+
 }
 
 [System.Serializable]
