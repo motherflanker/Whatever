@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private int maxActiveHiddenObjectCount = 5;
 
-    private int totalHiddenObjectFound = 0;
+    private int totalHiddenObjectsFound = 0;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
 
     void AssignHiddenObject()
     {
-        totalHiddenObjectFound = 0;
+        totalHiddenObjectsFound = 0;
         activeHiddenObjectList.Clear();
         for(int i = 0; i < hiddenObjectList.Count; i++)
         {
@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
         while(k < maxActiveHiddenObjectCount)
         {
             int randVal = Random.Range(0, hiddenObjectList.Count);
-            if (hiddenObjectList[randVal].makeHidden)
+            if (!hiddenObjectList[randVal].makeHidden)
             {
                 hiddenObjectList[randVal].hiddenObject.name = "" + k;
                 hiddenObjectList[randVal].makeHidden = true;
@@ -76,9 +76,9 @@ public class LevelManager : MonoBehaviour
                         break;
                     }
                 }
-                totalHiddenObjectFound++;
+                totalHiddenObjectsFound++;
                 
-                if(totalHiddenObjectFound >= maxActiveHiddenObjectCount)
+                if(totalHiddenObjectsFound >= maxActiveHiddenObjectCount)
                 {
                     Debug.Log("Level complete");
                 }
