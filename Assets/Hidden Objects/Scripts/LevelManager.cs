@@ -12,7 +12,9 @@ public class LevelManager : MonoBehaviour
     private List<HiddenObjectData> activeHiddenObjectList;
 
     [SerializeField]
-    private int maxActiveHiddenObjectList = 5;
+    private int maxActiveHiddenObjectCount = 5;
+
+    private int totalHiddenObjectFound = 0;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class LevelManager : MonoBehaviour
 
     void AssignHiddenObject()
     {
+        totalHiddenObjectFound = 0;
         activeHiddenObjectList.Clear();
         for(int i = 0; i < hiddenObjectList.Count; i++)
         {
@@ -36,7 +39,7 @@ public class LevelManager : MonoBehaviour
         }
         
         int k = 0;
-        while(k < maxActiveHiddenObjectList)
+        while(k < maxActiveHiddenObjectCount)
         {
             int randVal = Random.Range(0, hiddenObjectList.Count);
             if (hiddenObjectList[randVal].makeHidden)
@@ -61,7 +64,24 @@ public class LevelManager : MonoBehaviour
 
             if(tap && tap.collider != null)
             {
-                Debug.Log("Object Name:" + tap.collider.gameObject.name);
+                // Debug.Log("Object Name:" + tap.collider.gameObject.name);
+
+                tap.collider.gameObject.SetActive(false);
+
+                for(int i = 0; i < activeHiddenObjectList.Count; i++)
+                {
+                    if(activeHiddenObjectList[i].hiddenObject.name == tap.collider.gameObject.name)
+                    {
+                        activeHiddenObjectList.RemoveAt(i);
+                        break;
+                    }
+                }
+                totalHiddenObjectFound++;
+                
+                if(totalHiddenObjectFound >= maxActiveHiddenObjectCount)
+                {
+                    Debug.Log("Level complete");
+                }
             }
         }
     }
