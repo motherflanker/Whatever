@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+{   
+    public static LevelManager instance;
+
+    [SerializeField]
+    private List<HiddenObjectData> hiddenObjectList;
+
+    private void Awake()
     {
-        
+        if (instance == null) instance = this;
+        else if (instance != null) Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+}
+
+[System.Serializable]
+public class HiddenObjectData 
+{
+    public string name;
+    public GameObject hiddenObject;
+    public bool makeHidden;
 }
