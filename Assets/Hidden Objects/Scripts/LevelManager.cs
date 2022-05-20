@@ -9,12 +9,48 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private List<HiddenObjectData> hiddenObjectList;
 
+    private List<HiddenObjectData> activeHiddenObjectList;
+
+    [SerializeField]
+    private int maxActiveHiddenObjectList = 5;
+
     private void Awake()
     {
         if (instance == null) instance = this;
         else if (instance != null) Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        activeHiddenObjectList = new List<HiddenObjectData>();
+        AssignHiddenObject();
+    }
+
+    void AssignHiddenObject()
+    {
+        activeHiddenObjectList.Clear();
+        for(int i = 0; i < hiddenObjectList.Count; i++)
+        {
+            hiddenObjectList[i].hiddenObject.GetComponent<Collider2D>().enabled = false;    
+
+        }
+        
+        int k = 0;
+        while(k < maxActiveHiddenObjectList)
+        {
+            int randVal = Random.Range(0, hiddenObjectList.Count);
+            if (hiddenObjectList[randVal].makeHidden)
+            {
+                hiddenObjectList[randVal].hiddenObject.name = "" + k;
+                hiddenObjectList[randVal].makeHidden = true;
+                hiddenObjectList[randVal].hiddenObject.GetComponent<Collider2D>().enabled = true;
+
+                activeHiddenObjectList.Add(hiddenObjectList[randVal]);
+
+                k++;
+            }
+        }
+    }
 }
 
 [System.Serializable]
