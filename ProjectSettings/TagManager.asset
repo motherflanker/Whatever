@@ -3,15 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - background
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Background
+  - Objects
   - Water
   - UI
-  - Objects
+  - Background
   - 
   - 
   - 
@@ -41,9 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: background
-    uniqueID: 3950198693
-    locked: 0
   - name: objects
     uniqueID: 2180223017
+    locked: 0
+  - name: background
+    uniqueID: 3950198693
     locked: 0
