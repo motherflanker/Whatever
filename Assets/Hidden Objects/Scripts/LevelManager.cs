@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 public class LevelManager : MonoBehaviour
-{   
+{
+    private TextMeshProUGUI items;
     public static LevelManager instance;
 
     [SerializeField]
@@ -24,8 +28,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        items = GameObject.Find("Items").GetComponent<TextMeshProUGUI>();
         activeHiddenObjectList = new List<HiddenObjectData>();
         AssignHiddenObject();
+        UpdateItems();
+
     }
 
     void AssignHiddenObject()
@@ -44,7 +51,6 @@ public class LevelManager : MonoBehaviour
             int randVal = Random.Range(0, hiddenObjectList.Count);
             if (!hiddenObjectList[randVal].makeHidden)
             {
-                hiddenObjectList[randVal].hiddenObject.name = "" + k;
                 hiddenObjectList[randVal].makeHidden = true;
                 hiddenObjectList[randVal].hiddenObject.GetComponent<Collider2D>().enabled = true;
 
@@ -65,7 +71,7 @@ public class LevelManager : MonoBehaviour
             if(tap && tap.collider != null)
             {
                 // Debug.Log("Object Name:" + tap.collider.gameObject.name);
-
+                
                 tap.collider.gameObject.SetActive(false);
 
                 for(int i = 0; i < activeHiddenObjectList.Count; i++)
@@ -76,6 +82,7 @@ public class LevelManager : MonoBehaviour
                         break;
                     }
                 }
+                UpdateItems();
                 totalHiddenObjectsFound++;
                 
                 if(totalHiddenObjectsFound >= maxActiveHiddenObjectCount)
@@ -84,6 +91,13 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    
+
+    private void UpdateItems()
+    {
+        items.text = string.Join(", ", activeHiddenObjectList.Select(item => item.hiddenObject.name));
     }
 
 }
