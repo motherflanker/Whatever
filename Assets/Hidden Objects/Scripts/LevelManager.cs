@@ -71,8 +71,6 @@ public class LevelManager : MonoBehaviour
 
             if(tap && tap.collider != null)
             {
-                // Debug.Log("Object Name:" + tap.collider.gameObject.name);
-                
                 tap.collider.gameObject.SetActive(false);
 
                 for(int i = 0; i < activeHiddenObjectList.Count; i++)

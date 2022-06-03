@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraResizeScript : MonoBehaviour
 {
-    private float defaultSize = 5; //size for 480 * 800 (0.6) screen resolution
+    private readonly float defaultSize = 5; //size for 480 * 800 (0.6) screen resolution
 
     // Start is called before the first frame update
     void Start()
