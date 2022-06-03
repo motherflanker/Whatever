@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -88,7 +89,6 @@ public class LevelManager : MonoBehaviour
                 if(totalHiddenObjectsFound >= maxActiveHiddenObjectCount)
                 {
                     CompleteLevel();
-                    //Debug.Log("Level complete");
                 }
             }
         }
@@ -96,14 +96,34 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteLevel()
     {
-        var resources = Resources.FindObjectsOfTypeAll<TextMeshProUGUI>();
-        var summaryLabel = resources[0];
+        var summaryLabel = FindInactiveObjectByName("LevelSummary");
         summaryLabel.gameObject.SetActive(true);
     }
 
     private void UpdateItems()
     {
         items.text = string.Join(", ", activeHiddenObjectList.Select(item => item.hiddenObject.name));
+    }
+
+    public void NavigateToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    private GameObject FindInactiveObjectByName(string name)
+    {
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].name == name)
+                {
+                    return objs[i].gameObject;
+                }
+            }
+        }
+        return null;
     }
 
 }
