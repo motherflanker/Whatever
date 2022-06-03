@@ -87,13 +87,19 @@ public class LevelManager : MonoBehaviour
                 
                 if(totalHiddenObjectsFound >= maxActiveHiddenObjectCount)
                 {
-                    Debug.Log("Level complete");
+                    CompleteLevel();
+                    //Debug.Log("Level complete");
                 }
             }
         }
     }
 
-    
+    private void CompleteLevel()
+    {
+        var resources = Resources.FindObjectsOfTypeAll<TextMeshProUGUI>();
+        var summaryLabel = resources[0];
+        summaryLabel.gameObject.SetActive(true);
+    }
 
     private void UpdateItems()
     {
